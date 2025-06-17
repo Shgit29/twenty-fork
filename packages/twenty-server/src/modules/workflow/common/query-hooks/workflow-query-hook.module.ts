@@ -33,6 +33,7 @@ import { WorkflowVersionUpdateManyPreQueryHook } from 'src/modules/workflow/comm
 import { WorkflowVersionUpdateOnePreQueryHook } from 'src/modules/workflow/common/query-hooks/workflow-version-update-one.pre-query.hook';
 import { WorkflowCommonWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-common.workspace-service';
 import { WorkflowVersionValidationWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-version-validation.workspace-service';
+import { WorkflowQueryHooksWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-query-hooks.workspace-service';
 
 @Module({
   imports: [
@@ -63,12 +64,13 @@ import { WorkflowVersionValidationWorkspaceService } from 'src/modules/workflow/
     WorkflowVersionDeleteManyPreQueryHook,
     WorkflowCreateOnePostQueryHook,
     WorkflowCreateManyPostQueryHook,
-    WorkflowVersionValidationWorkspaceService,
-    WorkflowCommonWorkspaceService,
     WorkflowDeleteManyPostQueryHook,
     WorkflowDeleteOnePostQueryHook,
     WorkflowDestroyOnePreQueryHook,
     WorkflowDestroyManyPreQueryHook,
+    WorkflowVersionValidationWorkspaceService,
+    WorkflowQueryHooksWorkspaceService,
+    WorkflowCommonWorkspaceService,
   ],
 })
 export class WorkflowQueryHookModule {}

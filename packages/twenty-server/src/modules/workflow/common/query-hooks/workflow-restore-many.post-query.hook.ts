@@ -4,8 +4,8 @@ import { WorkspaceQueryHook } from 'src/engine/api/graphql/workspace-query-runne
 import { WorkspaceQueryHookType } from 'src/engine/api/graphql/workspace-query-runner/workspace-query-hook/types/workspace-query-hook.type';
 import { AuthContext } from 'src/engine/core-modules/auth/types/auth-context.type';
 import { WorkflowWorkspaceEntity } from 'src/modules/workflow/common/standard-objects/workflow.workspace-entity';
-import { WorkflowCommonWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-common.workspace-service';
 import { workspaceValidator } from 'src/engine/core-modules/workspace/workspace.validate';
+import { WorkflowQueryHooksWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-query-hooks.workspace-service';
 
 @WorkspaceQueryHook({
   key: 'workflow.restoreMany',
@@ -15,7 +15,7 @@ export class WorkflowRestoreManyPostQueryHook
   implements WorkspacePostQueryHookInstance
 {
   constructor(
-    private readonly workflowCommonWorkspaceService: WorkflowCommonWorkspaceService,
+    private readonly workflowQueryHooksWorkspaceService: WorkflowQueryHooksWorkspaceService,
   ) {}
 
   async execute(
@@ -27,7 +27,7 @@ export class WorkflowRestoreManyPostQueryHook
 
     workspaceValidator.assertIsDefinedOrThrow(workspace);
 
-    await this.workflowCommonWorkspaceService.handleWorkflowSubEntities({
+    await this.workflowQueryHooksWorkspaceService.handleWorkflowSubEntities({
       workflowIds: payload.map((workflow) => workflow.id),
       workspaceId: workspace.id,
       operation: 'restore',

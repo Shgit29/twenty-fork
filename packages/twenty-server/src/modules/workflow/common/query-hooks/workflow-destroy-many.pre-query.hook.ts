@@ -3,15 +3,15 @@ import { DestroyManyResolverArgs } from 'src/engine/api/graphql/workspace-resolv
 
 import { WorkspaceQueryHook } from 'src/engine/api/graphql/workspace-query-runner/workspace-query-hook/decorators/workspace-query-hook.decorator';
 import { AuthContext } from 'src/engine/core-modules/auth/types/auth-context.type';
-import { WorkflowCommonWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-common.workspace-service';
 import { workspaceValidator } from 'src/engine/core-modules/workspace/workspace.validate';
+import { WorkflowQueryHooksWorkspaceService } from 'src/modules/workflow/common/workspace-services/workflow-query-hooks.workspace-service';
 
 @WorkspaceQueryHook('workflow.destroyMany')
 export class WorkflowDestroyManyPreQueryHook
   implements WorkspacePreQueryHookInstance
 {
   constructor(
-    private readonly workflowCommonWorkspaceService: WorkflowCommonWorkspaceService,
+    private readonly workflowQueryHooksWorkspaceService: WorkflowQueryHooksWorkspaceService,
   ) {}
 
   async execute(
@@ -23,7 +23,7 @@ export class WorkflowDestroyManyPreQueryHook
 
     workspaceValidator.assertIsDefinedOrThrow(workspace);
 
-    await this.workflowCommonWorkspaceService.handleWorkflowSubEntities({
+    await this.workflowQueryHooksWorkspaceService.handleWorkflowSubEntities({
       workflowIds: payload.filter.id.in,
       workspaceId: workspace.id,
       operation: 'destroy',
